@@ -1,0 +1,20 @@
+/* make the background color of the nav my favorite color  */
+nav  { /* nav - element  should be styled                  */
+    background-color: yellow;
+}
+table {
+    color : green;  /* set the text color to green */
+}
+#sportsQuestion { /* style the element with id="sportsQuestion" */
+    color: lightpink;
+}
+div { /* style all divs */
+    font-size: 20px;
+    color: blue;
+    text-align: center;
+}
+.namefield { /* style all elements with class=namefield  */
+   font-size: 30px;
+   color: orange;
+   text-align: left;
+}
