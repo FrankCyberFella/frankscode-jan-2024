@@ -1,0 +1,166 @@
+<style>
+  /* this is a comment CSS (styling) */
+  table { /* Apply these styles to all table elements */
+      font-family: arial, sans-serif; /* Use arial font, if not yse any sans-serif font */
+      width: 100%;
+      border-collapse: collapse;
+  }
+  
+  td, th { /* Apply these styles to all td and th elements */
+      border: 1px solid burlywood;
+      text-align: left;
+      padding: 4px;
+      }
+  
+      tr:nth-child(even) { /* Apply these styles to every other tr elements */
+          background-color: linen;
+      }
+  </style>    
+  <h1>Sample Page for HTML Training</h1>
+  <table>
+      <thead>
+          <tr>
+              <th>State<br>Code</th>
+              <th>State<br>Name</th>
+              <th>State<br>Motto</th>
+          </tr>
+      </thead>
+      <tr>
+          <td>AK</td>
+          <td>Arkansas</td>
+          <td>The people rule</td>
+      </tr>
+      <tr>
+          <td>CA</td>
+          <td>California</td>
+          <td>Eureka</td>
+      </tr>
+      <tr>
+          <td>CT</td>
+          <td>Connecticut</td>
+          <td>He who has transplanted still sustains</td>
+      </tr>
+      <tr>
+          <td>ME</td>
+          <td>Maine</td>
+          <td>I Lead</td>
+      </tr>
+      <tr>
+          <td>MA</td>
+          <!-- used inline style make this element a different color -->
+          <td style="color : blueviolet">Massachusetts</td>
+          <td>By the sword we seek peace, but peace inly under liberty</td>
+      </tr>
+      <tr>
+          <td>NH</td>
+          <td>New Hampshire</td>
+          <td>Live free or die</td>
+      </tr>
+      <tr>
+          <td>TX</td>
+          <td>Texas</td>
+          <td>Friendship</td>
+      </tr>
+      
+  </table>
+  <br><br>
+  <!-- Form to receive information about a user -->
+  <!-- When the submit button is clicked the data in the form can be sent to an API -->
+  <!-- method="POST" says end the data to the API to be saved                       -->
+  <!-- action="url-for-the-API-to-receive-the-data"                                 -->
+  <form method="POST" action="https://65ce8e89c715428e8b40f033.mockapi.io/userinfo">
+  <!-- Ask for user name -->
+  <!-- id="name-used-to-reference-the-control-in-the-html-document"            -->
+  <!-- name="name-used-by-external-process-to-access-the-data-entered-by-user" -->
+  <!-- an example of an external process is a program or an API                -->
+  <!-- the label tag adds a prompt/word to the control for="id-for-control"    -->
+  
+  <!-- the div tag allows us to group elements for styling or spacing -->
+  <!-- Each div element starts on a new line by default               -->
+  <div>
+      <label for="fnamefield">First Name:</label>
+      <input type="text" id="fnamefield" name="fname"/>
+  </div>
+  <div>
+      <label for="lnamefield">Last Name:</label>
+      <input type="text" id="lnamefield" name="lname"/>
+  </div>
+  <!-- type="date" generates a basic date picker on the page -->
+  <div>
+      <label for="bdate"> Birth Date:</label>
+      <input type="date" id="bdate" name="birthDate">
+  </div>
+  <!-- the select tag creates a dropdown list                                 -->
+  <!-- the name="" on the select tag is the name of teh variable to hold data -->
+  <!-- the option tags within the select tag provide the choices              -->
+  <!-- the value="" in the option tag is what gets stored for the choice      -->
+  <!-- the content of the option tag is what is displayed as the choice       -->
+  <div>
+      <label for="foodfield">Cuisine Preference: </label>
+      <select name="FoodPrefs" id="foodfield">
+          <option value="italian">Italian</option>
+          <option value="mexican">Mexican</option> 
+          <option value="indian">Indian</option>
+          <option value="american">USA</option>
+          <option value="chinese">Chinese</option>
+          <option value="japanese">Japanese</option>
+          <option value="vietnamese">vietnamese</option>
+          <option value="french">French</option>
+          <option value="other">Other cuisine</option>
+      </select>
+  </div>
+  <div>
+      <p>Contact Information:</p>
+      <label for="email-address">What's your email adddress:</label>
+      <input type="text" id="email-address" name="email"/>
+      <!-- if you want a blank line inside a div use br tag-->
+      <br> <!-- the br tag is the only tag that does not require an end tag  -->
+      <!-- the type="radio" generates radio buttons - only one can be chosen -->
+      <!-- use the same name="" for radio buttons in the same group          -->
+      <!-- the value="" on the element is the value stored in the varable    -->
+      <!--     if the radio button is selected                               -->
+      May we contact you?
+          <input type="radio" id="emailyesfield"  name="email-preference" value="yes"/>
+          <label for="emailyesfield">Sure</label>
+          <input type="radio" id="emailnofield"   name="email-preference" value="no"/>
+          <label for="emailnofield">No Way!!!</label>
+  </div>
+  
+  <div>
+      <!-- checkbox tag generates a checkbox group where multiple choices allowed -->
+      <!-- the name="" is the same for all choices in a group                     -->
+      <!-- the value="" is what gets stored in te variable holding the choices    -->
+      <!-- the values are stored as a group under the name="" variable            -->
+      <!--    (next week will know this as an array)                              -->
+      <p>Do you like any sports?</p>
+      <input type="checkbox" id="football" name="preferredSports" value="Football">
+      <label for="football">American Football</label>
+      <br>
+      <input type="checkbox" id="soccer"   name="preferredSports" value="soccer">
+      <label for="soccer">European Football</label>
+      <br>
+      <input type="checkbox" id="baseball" name="preferredSports" value="baseball">
+      <label for="baseball">Baseball</label>
+      <br>
+      <input type="checkbox"  id="basketball" name="preferredSports" value="basketball">
+      <label for="basketball">Basketball</label>
+      <br>
+      <input type="checkbox" id="cricket" name="preferredSports" value="cricket">
+      <label for="cricket">Cricket</label>
+      <br>
+      <input type="checkbox" id="hockey" name="preferredSports" value="hockey">
+      <label for="hockey">Hockey</label>
+      <br>
+      <input type="checkbox" id="other" name="preferredSports" value="some-other-sport">
+      <label for="other">Other Sport</label>
+  </div>
+  <div>
+      <br>  
+      <!-- type="submit" generates a submit button                            -->  
+      <!-- a submit button send the data from the form to the URL specified   -->
+      <!--          in the action="" attribute on the form tag                -->
+      <!--          using the request type specified in method="" on the form -->
+      <!-- the value="" what is displayed in the button                       -->
+      <input type="submit" value="Click to Submit"/> 
+  </div>
+  </form>
