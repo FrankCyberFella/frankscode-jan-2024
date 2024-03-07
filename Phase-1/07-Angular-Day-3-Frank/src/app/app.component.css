@@ -1,0 +1,5 @@
+/* CSS to be applied to this component only */
+
+#pageHeading { /* apply styling to id="pageHeading" */
+    text-align: center;
+}
