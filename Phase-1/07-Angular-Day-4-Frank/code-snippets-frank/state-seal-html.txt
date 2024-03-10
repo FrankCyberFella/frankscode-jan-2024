@@ -1,0 +1,3 @@
+<img src="./images/CaliforniaStateSeal.jpg"/>
+<img src="./images/MassachusettsStateSeal.jpg"/>
+<img src="./images/maineStateSeal.jpg"/>
