@@ -1,0 +1,8 @@
+/* CSS to be applied to this component only */
+#logo img {
+    height: 120px;
+    width:  400px;
+}
+#pageHeading { /* apply styling to id="pageHeading" */
+    text-align: center;
+}

@@ -1,0 +1,102 @@
+<!-- Form to receive information about a user --> 
+<!-- when the submit is clicked (ngSubmit), run the method onSUbmit() in the component -->
+<!-- ngSubmit represents the click event on a submit button (type='submit')            -->                           
+  <form  id="theForm" (ngSubmit)="onSubmit()">
+    <!-- Ask for user name -->
+    <!-- id="name-used-to-reference-the-control-in-the-html-document"            -->
+    <!-- [(ngModel)]="name-used-by-external-process-to-access-the-data-entered-by-user" -->
+    <!-- an example of an external process is a program or an API                -->
+    <!-- the label tag adds a prompt/word to the control for="id-for-control"    -->
+    
+    <!-- the div tag allows us to group elements for styling or spacing -->
+    <!-- Each div element starts on a new line by default               -->
+    
+    <!-- [(NgModel)] two-bind the data in the form to a component variable                     -->
+    <!-- two-way binding allows data to be shared between the web page and the component       -->    
+    <!-- [(ngModel)]="fname"  connect this input control to the fname variable in the component --> 
+     <div>
+        <label for="fnamefield">First Name:</label>
+        <input type="text" id="fnamefield" [(ngModel)]="fname" name="fname"/>
+    </div>
+    <div>
+        <label for="lnamefield">Last Name:</label>
+        <input type="text" id="lnamefield" [(ngModel)]="lname" name="name"/>
+    </div>
+    <!-- type="date" generates a basic date picker on the page -->
+    <div>
+        <label for="bdate"> Birth Date:</label>
+        <input type="date" id="bdate" [(ngModel)]="birthDate" name="birthDate">
+    </div>
+    <!-- the select tag creates a dropdown list                                 -->
+    <!-- the [(ngModel)]="" on the select tag is the name of the variable to hold data -->
+    <!-- the option tags within the select tag provide the choices              -->
+    <!-- the value="" in the option tag is what gets stored for the choice      -->
+    <!-- the content of the option tag is what is displayed as the choice       -->
+    <div>
+        <label for="foodfield">Cuisine Preference: </label>
+        <select [(ngModel)]="foodPrefs" name="foodPrefs" id="foodfield">
+            <option value="italian">Italian</option>
+            <option value="mexican">Mexican</option> 
+            <option value="indian">Indian</option>
+            <option value="american">USA</option>
+            <option value="chinese">Chinese</option>
+            <option value="japanese">Japanese</option>
+            <option value="vietnamese">vietnamese</option>
+            <option value="french">French</option>
+            <option value="other">Other cuisine</option>
+        </select>
+    </div>
+    <div>
+        <p>Contact Information:</p>
+        <label for="email-address">What's your email adddress:</label>
+        <input type="text" id="email-address" [(ngModel)]="email" name="email"/>
+        <!-- if you want a blank line inside a div use br tag-->
+        <br> <!-- the br tag is the only tag that does not require an end tag  -->
+        <!-- the type="radio" generates radio buttons - only one can be chosen -->
+        <!-- use the same [(ngModel)]="" for radio buttons in the same group          -->
+        <!-- the value="" on the element is the value stored in the varable    -->
+        <!--     if the radio button is selected                               -->
+        May we contact you?
+            <input type="radio" id="emailyesfield"  [(ngModel)]="email_preference" value="yes" name="email_preference"/>
+            <label for="emailyesfield">Sure</label>
+            <input type="radio" id="emailnofield"   [(ngModel)]="email_preference" value="no" name="email_preference"/>
+            <label for="emailnofield">No Way!!!</label>
+    </div>
+    <div>
+        <br>   
+        <!-- (change) - tells Angular when a change event occurs on this control      -->
+        <!--             run the method called CheckAllOptions() in component.ts file -->                                             
+        <input type="checkbox" (change)="CheckAllOptions()"/>
+            <span>Select All</span>
+    </div>
+    <!-- *ngFor is Angular for loop to process all items in an array or object         -->
+    <!-- let name-for-element of array  it will lopp through all elements in the array -->
+    <!--     generating the html it is coded upon                                      -->
+    <!-- generate one div for every element in checkboxes array                        -->
+    <div *ngFor="let checkbox of checkboxes">
+        <!-- [(ngModel)] two-bind and html element to a typescript variable-->
+        <!-- [value] - value to be returned when the box is checked        -->
+        <!-- checkbox.checked   checkbox is name of current object .check is its attributes -->
+        <!-- {{ checked.name }} one-way bind element value to TypeScript value              -->
+        <!-- checked is the name of attribute in html to indicate if a checkbox is checked  -->
+        <!-- when a checkbox is chosen, its value is set to true                            -->
+        <!-- because we two-way bind ([(ngModel)]) the checkbox to a Typescript variable    -->
+        <!--      the TypeScript variable is automatically updated                          -->
+        <input
+            type="checkbox"
+            [(ngModel)]="checkbox.checked"
+            [ngModelOptions]="{standalone: true}"
+            [value]="checkbox.value"
+        /><span>{{ checkbox.name }}</span>
+    </div>
+
+    <div>
+        <br>  
+        <!-- type="submit" generates a submit button                            -->  
+        <!-- a submit button send the data from the form to the URL specified   -->
+        <!--          in the action="" attribute on the form tag                -->
+        <!--          using the request type specified in method="" on the form -->
+        <!-- the value="" what is displayed in the button                       -->
+        <input type="submit" value="Click to Submit"/> 
+    </div>
+    </form>
