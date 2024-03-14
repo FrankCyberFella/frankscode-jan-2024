@@ -1,0 +1,8 @@
+/* Styling to be applied to this component only */
+
+* {  /* Apply this styling to all elements */
+    color :rebeccapurple;
+}
+#learnerList {
+    list-style-type: circle;
+}

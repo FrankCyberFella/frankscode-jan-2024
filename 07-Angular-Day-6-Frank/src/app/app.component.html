@@ -1,0 +1,21 @@
+<!-- This tag using data stored in the component                     -->
+<!-- {{}} referred to as mustache notation                           -->
+<!-- contains the name of a property/variable in teh component       -->
+<!-- this is called one-way binding                                  -->
+<!-- data from component can be used in html template                -->
+<!-- the data only flows in one direction from component to template -->
+<!-- {{ pageTitle }}  says go to the component and get the pageTitle -->
+<!-- data for a component is coded in the .ts file for the component -->
+<div id="logo">
+    <img src="../assets/images/simplilearnLogo.png"/>
+</div>
+
+  
+<!-- nav-bar is an Angular component                       -->
+<!-- we want include the navigation bar with the URL paths -->
+<nav-bar></nav-bar>
+<!-- router-outlet tells Angular we want to it's router    -->
+<!--               to manage our Single Page Application   -->
+<!-- the Angular router will switch between components     -->
+<!--     based on the path in URL given to teh browser     -->
+<router-outlet></router-outlet>
