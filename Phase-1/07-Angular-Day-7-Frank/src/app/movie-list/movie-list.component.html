@@ -1,0 +1,25 @@
+
+<table id="movieInfoTable">
+    <tr>
+        <th>Movie</th>
+        <th>Year</th>
+        <th></th>
+    </tr>
+    <tr>
+        <!-- (click) when this element is clicked, run this method              -->
+        <!-- (click) specifies an event handler for a click  event              -->
+        <!-- the same method is run with a different depending on what is click -->
+        <th (click) = "sortListOfMovies('Title')">Title</th>
+        <th (click) = "sortListOfMovies('Date')">Released</th>
+        <th (click) = "sortListOfMovies('Dir')">Director</th>
+    </tr>
+    <tr *ngFor="let aMovie of moviesList">
+        <td>{{aMovie.title}}</td>
+        <td id="relyear">{{aMovie.releaseYear}}</td>
+        <td>{{aMovie.director}}</td>
+</tr>    
+</table>
+<input type="button" 
+       id="addMovieButton" 
+       value="Add Movie" 
+       routerLink="/addmovie"/>

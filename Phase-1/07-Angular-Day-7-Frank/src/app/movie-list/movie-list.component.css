@@ -1,0 +1,20 @@
+
+#movieInfoTable {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 20px;
+    border: 2px solid blue;
+    border-color: var(--borderColor);
+    border-collapse: collapse;
+}
+
+#movieInfoTable td {
+    border: 1px solid blue;
+    padding: 5px;
+}
+#relyear {
+    text-align: center;
+}
+#addMovieButton{
+    background-color: blanchedalmond;
+    margin-top: 10px;
+}

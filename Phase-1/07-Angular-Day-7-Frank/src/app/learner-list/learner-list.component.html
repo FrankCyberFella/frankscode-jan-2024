@@ -1,0 +1,9 @@
+<!-- The html to be used by Angular when it displsy page    -->
+<!-- one way bind the learners variable in .ts to this page -->
+<h3>Some of the Learners in Our Cohort</h3>
+<div>
+    <ol id="learnerList">
+     <li *ngFor="let aLearner of learnerNames">{{aLearner}}</li>
+    </ol>
+</div>
+
