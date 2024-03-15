@@ -1,0 +1,30 @@
+<!-- [ngModel] specifies angular two-way binding -->
+<!-- (ngSubmit) say run the method specified when teh submit button is clicked    -->
+<!-- so here when submit is clicked we run the addMovie method for this component -->
+<!--    with the newMovie object that was filled in by the user                   -->
+<form  id="theForm" (ngSubmit)="addMovie(newMovie)">
+    <div>
+        <label for="movieNameFeld">Movie Name:</label>
+        <input type="text" id="movieNameField" [(ngModel)]="newMovie.title" name="title"/>
+    </div>
+    <div>
+        <label for="releaseYearField" id="releaseYearLabel">Release Year:</label>
+        <input type="number" id="releaseYearField" 
+               min="1900" max="2099" step="1"
+               [(ngModel)]="newMovie.releaseYear"
+               name="releaseYear"/>
+    </div>
+    <div>
+        <label for="directorFeld">Director:</label>
+        <input type="text" id="directorField" [(ngModel)]="newMovie.director" name="director"/>
+    </div>
+<div id="buttonarea">
+    <input class="abutton" id="submitButton" type="submit" value="Click to Submit"/> 
+    &nbsp;
+    <input class="abutton" 
+           id="cancelButton"
+           type="button" 
+           value="Cancel" 
+           (click) = "cancelButtonClicked()">
+</div>
+</form>

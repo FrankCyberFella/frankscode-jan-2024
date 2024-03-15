@@ -1,0 +1,41 @@
+#theForm {
+    width: 90%;
+  }
+  
+  label,
+  input {
+    /* In order to define widths */
+    display: inline-block;
+  }
+  
+  label {
+    width: 10%;
+    /* Positions the label text beside the input */
+    text-align: right;
+  }
+  
+  label+input {
+    width: 40%;
+    /* Large margin-right to force the next element to the new-line
+             and margin-left to create a gutter between the label and input */
+    margin-left: 1%;
+  }
+  #releaseYearField {
+    width: 4em;
+  }
+#buttonarea {
+    padding: 5px;
+    justify-items: auto;
+}
+.abutton {
+    padding: 2px;
+    color: white;
+}
+#submitButton {
+    background-color:forestgreen;
+    border-color: forestgreen;
+}
+#cancelButton {
+    background-color: deeppink;
+    border-color: deeppink;
+}
