@@ -3,9 +3,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>SampleJavaProject</artifactId>
+    <artifactId>01-Day-4-PlayingCard-Enhanced</artifactId>
 
-    <groupId>SampleJavaProject</groupId>
+    <groupId>com.frank</groupId>
 
     <packaging>jar</packaging>
 
