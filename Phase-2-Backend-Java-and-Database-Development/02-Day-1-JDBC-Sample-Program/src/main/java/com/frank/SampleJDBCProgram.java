@@ -25,7 +25,7 @@ public class SampleJDBCProgram
  		//                    access:dbmgr:server-name:port/databasename
  		vegasDataSource.setUrl("jdbc:mysql://localhost:3306/vegasdb");// connection string
  		vegasDataSource.setUsername("student");                       // owner of the database
- 		vegasDataSource.setPassword("javarules");                     // password for owner
+ 		vegasDataSource.setPassword("Java#1Rules");                   // password for owner
  		
  	// Define an object to represent a DAO we will be using	
  		GamblerDao theGamblerData = new JdbcGamblerDao(vegasDataSource);

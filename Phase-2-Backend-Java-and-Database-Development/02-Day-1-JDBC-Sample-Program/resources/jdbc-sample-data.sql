@@ -46,7 +46,7 @@ use vegasdb;
 -- ---------------------------------------------------------------------------
 -- Create a user with a password for class work 
 -- ---------------------------------------------------------------------------
-CREATE USER 'student'@'localhost' IDENTIFIED BY 'javarules';
+CREATE USER 'student'@'localhost' IDENTIFIED BY 'Java#1Rules';
 
 -- ---------------------------------------------------------------------------
 -- Allow user to do anything on the class database
@@ -184,7 +184,7 @@ insert into host
 insert into host
   values('Binions Horseshoe', 572, 'Penthouse', 2000.00, 25);
 insert into host
-  values('harveys casino', 191, 'Penthouse', 25000.00, 345);
+  values('Harveys Casino', 191, 'Penthouse', 25000.00, 345);
 insert into host
   values('Ballys', 382, 'Rack',   16.50, 2);
 insert into host
