@@ -1,11 +1,11 @@
-package com.frank._Day_6__Abstract_Classes_Interfaces;
+package com.frank;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Unit test for simple SampleJDBCProgram.
  */
 public class AppTest 
     extends TestCase
