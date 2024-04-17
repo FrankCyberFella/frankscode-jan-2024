@@ -1,10 +1,10 @@
-package com.frank.model.Gambler;
+package com.frank.model.gambler;
 
 /*****************************************************************************************************************
- * Implement methods for manipulating are returning data from the Gambler table
+ * Implement methods for manipulating are returning data from the gambler table
  * At minimum, implement the methods required by the GamblerDao interface
  
-    Gambler table as defined in the database
+    gambler table as defined in the database
   	
  	+----------------+--------------+------+-----+---------+----------------+
     | Field          | Type         | Null | Key | Default | Extra          |
@@ -19,8 +19,6 @@ package com.frank.model.Gambler;
  *****************************************************************************************************************/
 
 import java.util.ArrayList;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -69,7 +67,7 @@ public class JdbcGamblerDao implements GamblerDao {
 	}
 
 	@Override
-	// This method receives a Gambler object containing the Gambler info to be added
+	// This method receives a gambler object containing the gambler info to be added
 	//             returns whether the row was successfully added or not
 	public boolean addGambler(Gambler gamblerToAdd) {
 		
@@ -101,9 +99,16 @@ public class JdbcGamblerDao implements GamblerDao {
 		}
 		// The only exception JdbcTemplates throw is a DataAccessException
 		catch (DataAccessException exceptionInfo) {
-			System.out.println("!!!!! Error adding new Gambler to Database !!!!");
+			System.out.println("!!!!! Error adding new gambler to Database !!!!");
 			return false;
-		 }	
+		 }
+		int idOfRowAdded;
+		SqlRowSet selectResult = theDataBase.queryForRowSet("Select LAST_INSERT_ID()");
+		if (selectResult.next()) {
+			idOfRowAdded = selectResult.getInt(1);
+			System.out.println("Row was added with id: " + idOfRowAdded);
+		}
+
 		if (numRowsAdded == 1) {
 			return true;
 		}
@@ -161,7 +166,7 @@ public class JdbcGamblerDao implements GamblerDao {
 
 	@Override
 	
-	// This method receives an Gambler object with changed and unchanged data including change
+	// This method receives an gambler object with changed and unchanged data including change
 	// We do this so we don't don't have to worry about what has changed
 	//    The application is what worries about what has changed
 	//    All we do is send and receive data to data base
@@ -185,7 +190,7 @@ public class JdbcGamblerDao implements GamblerDao {
 							  );
 		}
 		catch (DataAccessException exceptionInfo) {
-			System.out.println("!!!!! Error adding new Gambler " + gamblerPassed.getName() + " to Database !!!!");	 }	
+			System.out.println("!!!!! Error adding new gambler " + gamblerPassed.getName() + " to Database !!!!");	 }
 			
 	}
 
@@ -198,11 +203,11 @@ public class JdbcGamblerDao implements GamblerDao {
 			theDataBase.update(deleteByIdSql, id);
 		}
 		catch (DataAccessException exceptionInfo) {
-			System.out.println("!!!!! Error deleting Gambler Id " + id + " from to Database !!!!");
+			System.out.println("!!!!! Error deleting gambler Id " + id + " from to Database !!!!");
 		 }	
 	}		
 	
-	// Create a Gambler POJO from a row in the SqlRowSet
+	// Create a gambler POJO from a row in the SqlRowSet
 	// Be sure all columns expected by the methods 
 	//     were included in the select that created the SqlRowSet
 	Gambler MapRowToGambler(SqlRowSet aRow) {

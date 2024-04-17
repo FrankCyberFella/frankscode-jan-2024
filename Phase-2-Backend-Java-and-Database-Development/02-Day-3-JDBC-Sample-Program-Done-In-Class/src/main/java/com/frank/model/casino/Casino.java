@@ -1,21 +1,23 @@
-package com.frank.model.Casino;
+package com.frank.model.casino;
 
 import java.util.Objects;
 
-// POJO that represents the Casino table in the data base
+// POJO that represents the casino table in the data base
+
+/* Columns in the casino table
+	+-------------+----------+------+-----+---------+-------+
+	| Field       | Type     | Null | Key | Default | Extra |
+	+-------------+----------+------+-----+---------+-------+
+	| casino_name | char(20) | NO   | PRI | NULL    |       |
+	| location    | char(15) | NO   |     | NULL    |       |
+	| owner       | char(20) | NO   |     | NULL    |       |
+	| size        | int      | NO   |     | NULL    |       |
+	+-------------+----------+------+-----+---------+-------+
+ */
 
 public class Casino {
  
-	/* Columns in the Casino table
-	 	+-------------+----------+------+-----+---------+-------+
-		| Field       | Type     | Null | Key | Default | Extra |
-		+-------------+----------+------+-----+---------+-------+
-		| casino_name | char(20) | NO   | PRI | NULL    |       |
-		| location    | char(15) | NO   |     | NULL    |       |
-		| owner       | char(20) | NO   |     | NULL    |       |
-		| size        | int      | NO   |     | NULL    |       |
-		+-------------+----------+------+-----+---------+-------+
-	 */
+
 	
 	/*****************************************************************
 	 * Instance variables for table columns
@@ -94,12 +96,12 @@ public class Casino {
 
 	@Override
 	public String toString() {
-		return "Casino [casinoName=" + casinoName + ", location=" + location + ", owner=" + owner + ", size=" + size
+		return "casino [casinoName=" + casinoName + ", location=" + location + ", owner=" + owner + ", size=" + size
 				+ "]";
 	}
 
 	
-} // End of Casino class POJO
+} // End of casino class POJO
 
 
 

@@ -1,12 +1,12 @@
-package com.frank.model.Gambler;
+package com.frank.model.gambler;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 /****************************************************************************************************
- 	POJO for Gambler table
+ 	POJO for gambler table
  
- 	Gambler table as defined in the database
+ 	gambler table as defined in the database
   	
  	+----------------+--------------+------+-----+---------+----------------+
     | Field          | Type         | Null | Key | Default | Extra          |
@@ -103,7 +103,7 @@ public class Gambler {
 
 	@Override
 	public String toString() {
-		return "Gambler [id=" + id + ", name=" + name + ", address=" + address + ", birthDate=" + birthDate
+		return "gambler [id=" + id + ", name=" + name + ", address=" + address + ", birthDate=" + birthDate
 				+ ", monthlySalary=" + monthlySalary + "]";
 	}
 	
@@ -115,13 +115,13 @@ public class Gambler {
 	/****************************************************************************************************
 	 * Helper methods for this class
 	 ****************************************************************************************************/
-	public void displayGambler() { // Display data in a Gambler object
+	public void displayGambler() { // Display data in a gambler object
 			
 		System.out.println("$".repeat(30));
-		System.out.println("Gambler Name: " + name
+		System.out.println("gambler Name: " + name
 				          +"\n          Id: " + id
 				          +"\n     Address: " + address
 				          +"\n    Birthday: " + birthDate
 				          +"\n Monthly Pay: " + monthlySalary);
 	}
-} // End of Gambler class
+} // End of gambler class

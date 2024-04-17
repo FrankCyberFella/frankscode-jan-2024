@@ -1,8 +1,8 @@
-package com.frank.model.Casino;
+package com.frank.model.casino;
 
 import java.util.List;
 
-// DAO Interface for the Casino Table in the data base
+// DAO Interface for the casino Table in the data base
 
 // Identify the C.R.U.D.  (and any other methods) required to access the data
 

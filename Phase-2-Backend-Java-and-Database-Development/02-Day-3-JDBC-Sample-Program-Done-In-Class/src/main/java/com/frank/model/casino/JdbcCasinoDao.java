@@ -1,4 +1,4 @@
-package com.frank.model.Casino;
+package com.frank.model.casino;
 
 import java.util.List;
 

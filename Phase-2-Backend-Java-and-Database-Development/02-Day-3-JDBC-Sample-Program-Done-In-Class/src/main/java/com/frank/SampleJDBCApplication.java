@@ -7,11 +7,12 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.frank.model.host.*;
+
 import org.apache.commons.dbcp2.BasicDataSource;
-import com.frank.model.*;
-import com.frank.model.Gambler.Gambler;
-import com.frank.model.Gambler.GamblerDao;
-import com.frank.model.Gambler.JdbcGamblerDao;
+import com.frank.model.gambler.Gambler;
+import com.frank.model.gambler.GamblerDao;
+import com.frank.model.gambler.JdbcGamblerDao;
 
 /**
  * JDBC Sample Application Program
@@ -31,8 +32,9 @@ public class SampleJDBCApplication {
 	private BasicDataSource vegasDataSource;
 	
 	
-	// Define a reference to a DAO object we want to use to access a table in the database
+	// Define a reference to a DAO objects we want to use to access a table in the database
 	private GamblerDao theGamblerData;
+	private HostDao    theHostData;
 	
     /**************************************************************************************************************
      * Constructor for the application code
@@ -48,6 +50,7 @@ public class SampleJDBCApplication {
  		
  	// Instantiate a DC DAO object object to represent a DAO we will be using	
  		theGamblerData = new JdbcGamblerDao(vegasDataSource);
+		theHostData    = new JdbcHostDao(vegasDataSource);
 	}
 
 	/****************************************************************************
@@ -118,6 +121,30 @@ public class SampleJDBCApplication {
 	 			deleteACasino();
 	 			break;
 	 		}
+			case "E" : {
+				displayAllHosts();
+				break;
+			}
+			case "F" : {
+				displayHostByGambler();
+				break;
+			}
+			case "G" : {
+				displayHostByCasino();
+				break;
+			}
+			case "H" : {
+				addAHost();
+				break;
+			}
+			case "I" : {
+				updateAHost();
+				break;
+			}
+			case "J" : {
+				deleteAHost();
+				break;
+			}
 	 		default:
 	 			System.out.println("\n!!!!! Invalid option : " + menuOptionChosen + " !!!!!");
 	 			System.out.println("!!!!! Please try again !!!!!\n");
@@ -141,25 +168,32 @@ public class SampleJDBCApplication {
     		
     		System.out.println("----- Gambler Processing Options -----");
     		System.out.println("1 - Display all Gamblers");
-    		System.out.println("2 - Display a Specific Gambler");
-    		System.out.println("3 - Display a Gambler Based On Name");
-    		System.out.println("4 - Add a Gambler to the Data Base");
-    		System.out.println("5 - Update a Gambler in the Data Base");
-    		System.out.println("6 - Delete a Specific Gambler from the Data Base");	
-    		System.out.println("\n----- Casino Processing Options -----");
-    		System.out.println("A - Display all Casinos");
-    		System.out.println("B - Display a Casino Based On Name");
-    		System.out.println("C - Update a Casino");
-    		System.out.println("D - Delete a Casino");
-    		
-    		System.out.println("\n X - Exit");
-    		
-    		System.out.print("\nPlease choose an option: ");
-    		
-    		// Only the first character of what the user enters is returned in uppercase
-    		optionChosen = theKeyboard.nextLine().toUpperCase().substring(0,1);
-    		
-    		return optionChosen;
+    		System.out.println("2 - Display a Specific gambler");
+    		System.out.println("3 - Display a gambler Based On Name");
+    		System.out.println("4 - Add a gambler to the Data Base");
+		System.out.println("5 - Update a gambler in the Data Base");
+		System.out.println("6 - Delete a Specific gambler from the Data Base");
+		System.out.println("\n----- Casino Processing Options -----");
+		System.out.println("A - Display all Casinos");
+		System.out.println("B - Display a casino Based On Name");
+		System.out.println("C - Update a casino");
+		System.out.println("D - Delete a casino");
+		System.out.println("\n----- Host Processing Options -----");
+		System.out.println("E - Display all Host Entries");
+		System.out.println("F - Display a Host Entry Based On Gambler");
+		System.out.println("G - Display a Host Entry Based On Casino");
+		System.out.println("H - Add a Host Entry");
+		System.out.println("I - Update a Host Entry");
+		System.out.println("J - Delete a Host Entry");
+
+		System.out.println("\n X - Exit");
+
+		System.out.print("\nPlease choose an option: ");
+
+		// Only the first character of what the user enters is returned in uppercase
+		optionChosen = theKeyboard.nextLine().toUpperCase().substring(0,1);
+
+		return optionChosen;
    
     } // End of displayOptionAndReceiveOption()
     
@@ -193,7 +227,7 @@ public class SampleJDBCApplication {
  		
  		Gambler aNewGambler = new Gambler();
  		
- 		System.out.println("\nPlease enter information for the new Gambler:");
+ 		System.out.println("\nPlease enter information for the new gambler:");
  		
  		System.out.print("\nName: ");
  		aNewGambler.setName(theKeyboard.nextLine());
@@ -238,29 +272,20 @@ public class SampleJDBCApplication {
  	private LocalDate validateBirthDate(String birthDay) {
  		
 		LocalDate validBirthDate = null;
-	
-		boolean haveValidBirthday;
-		
- 		do {
- 			haveValidBirthday = false;;
- 		
- 		// Define USA formatted date (mm/dd/yyyy) for use with birthday entry
- 		
- 		DateTimeFormatter dateFormatterUSA = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-	 
- 		try {
-	 			validBirthDate = LocalDate.parse(birthDay, dateFormatterUSA);
-	 			haveValidBirthday = true;
-	 		}
-	 		catch(DateTimeParseException exceptionInfo) {
-	 			haveValidBirthday = false;
-	 			System.out.println("\n!!!!! Uh-Oh! uh-Oh! Uh-Oh!  !!!!!");
-	 			System.out.println("!!!!! Invalid date entered  !!!!!");
-	 			System.out.println("!!!!! Please try again      !!!!!");
-	 			haveValidBirthday = false;
-	 		}
- 		}
- 		while(!haveValidBirthday);
+
+		// Define USA formatted date (mm/dd/yyyy) for use with birthday entry
+
+		DateTimeFormatter dateFormatterUSA = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+		try {
+				validBirthDate = LocalDate.parse(birthDay, dateFormatterUSA);
+			}
+			catch(DateTimeParseException exceptionInfo) {
+				System.out.println("\n!!!!! Uh-Oh! uh-Oh! Uh-Oh!  !!!!!");
+				System.out.println("!!!!! Invalid date entered  !!!!!");
+				System.out.println("!!!!! Please try again      !!!!!");
+			}
+
  		
  		return validBirthDate;
  	}
@@ -313,7 +338,6 @@ public class SampleJDBCApplication {
 	 		}
  		return validSalary;
  	}
- 	
  	private void getAndDisplayAllGamblersFromTheDataBase() {	
  		
  	// Define an object to hold data returned from the DAO method	
@@ -324,10 +348,9 @@ public class SampleJDBCApplication {
  			aGambler.displayGambler();
  		}
  	}
- 
  	private void getAGamblerBasedOnTheirId() {
  	// Find a gambler using their id	
- 		System.out.print("\nPlease enter the id of the Gambler you would like to display: ");
+ 		System.out.print("\nPlease enter the id of the gambler you would like to display: ");
  		
  		int idWeWant = getIntValueFromUser();
  	
@@ -335,11 +358,11 @@ public class SampleJDBCApplication {
  			theGamblerData.findGamblerById(idWeWant).displayGambler();
  		}
  		catch(NullPointerException expectionBlock) {
- 			System.out.println("Gambler with id: " + idWeWant + " not found!");
+ 			System.out.println("gambler with id: " + idWeWant + " not found!");
  		}
  	}	
  	private void getAGamblerBasedOnName() {
- 		System.out.print("\nPlease enter the name of the Gambler you would like to display: ");
+ 		System.out.print("\nPlease enter the name of the gambler you would like to display: ");
  		
  		String nameWeWant = theKeyboard.nextLine();
  	
@@ -357,31 +380,29 @@ public class SampleJDBCApplication {
  			}
  		}
  		catch(NullPointerException expectionBlock) {
- 			System.out.println("Gambler with Name: " + nameWeWant + " not found!");
+ 			System.out.println("gambler with Name: " + nameWeWant + " not found!");
  		}
  		
  	}
- 
  	private void addANewGamblerToDataBase() {
  		
  		Gambler newGambler = getGamblerInfoFromUser();
  		
- 		System.out.println("\n--- Adding Gambler named: " + newGambler.getName());
+ 		System.out.println("\n--- Adding gambler named: " + newGambler.getName());
  		
 		boolean rowWasAdded = theGamblerData.addGambler(newGambler);
 		
 		if (rowWasAdded) {
-			System.out.println("--- Gambler name: " + newGambler.getName() + "was added successfully");
+			System.out.println("--- gambler name: " + newGambler.getName() + "was added successfully");
  		}
  	 	}
- 	
  	private void updateAGamblerBasedOnId() {
  	// Update a gambler
  		
- 			System.out.println("\nPlease enter the id of the Gambler to be updated: ");
+ 			System.out.println("\nPlease enter the id of the gambler to be updated: ");
  			int idToBeUpdated = getIntValueFromUser();
  		
- 			System.out.println("\n--- Updating Gambler Id " + idToBeUpdated+ " ----");
+ 			System.out.println("\n--- Updating gambler Id " + idToBeUpdated+ " ----");
  			
  			Gambler gamblerToUpdate = theGamblerData.findGamblerById(idToBeUpdated);
  			
@@ -389,13 +410,13 @@ public class SampleJDBCApplication {
  				System.out.println("Data BEFORE update:"); 				
  				gamblerToUpdate.displayGambler();	
  				
- 				System.out.println("Enter new name for Gambler or press enter to keep \"" + gamblerToUpdate.getName() + "\"");
+ 				System.out.println("Enter new name for gambler or press enter to keep \"" + gamblerToUpdate.getName() + "\"");
  				String newName = theKeyboard.nextLine();
  				if(!newName.equals("")) {
  					gamblerToUpdate.setName(newName);
  				}
  				
- 				System.out.println("Enter new city for Gambler or press enter to keep \"" + gamblerToUpdate.getAddress() + "\"");
+ 				System.out.println("Enter new city for gambler or press enter to keep \"" + gamblerToUpdate.getAddress() + "\"");
  				String newAddress = theKeyboard.nextLine();
  				if(!newAddress.equals("")) {
  					gamblerToUpdate.setAddress(newAddress);
@@ -408,7 +429,7 @@ public class SampleJDBCApplication {
  	 				DateTimeFormatter formatUSA = DateTimeFormatter.ofPattern("MM/dd/yyyy");
  	 			    String birthDateUSA = gamblerToUpdate.getBirthDate().format(formatUSA);
  	 				
-	 				System.out.println("Enter new birth date for Gambler or press enter to keep \"" + birthDateUSA + "\"");
+	 				System.out.println("Enter new birth date for gambler or press enter to keep \"" + birthDateUSA + "\"");
 	 				String newBirthDate = theKeyboard.nextLine();
 	 				if(newBirthDate.equals("")) {
 	 					updateBirthDate = false;
@@ -426,7 +447,7 @@ public class SampleJDBCApplication {
  				
  				do {
  	 				updateSalary = true;
-	 				System.out.println("Enter new monthly salary for Gambler or press enter to keep \"" + gamblerToUpdate.getMonthlySalary() +  "\"");
+	 				System.out.println("Enter new monthly salary for gambler or press enter to keep \"" + gamblerToUpdate.getMonthlySalary() +  "\"");
 	 				String  newSalary = theKeyboard.nextLine();
 	 				if(newSalary.equals("")) {
 	 					updateSalary = false;
@@ -449,16 +470,14 @@ public class SampleJDBCApplication {
  			else {
  				System.out.println("Uh-Oh... cannot find the gambler you are looking for");
  			}
- 	} 		
-	
+ 	}
  	private void removeAGamblerFromTheDataBaseBasedOnId() {		
  	// delete a gambler by id
- 			System.out.print("\nEnter id for Gambler to delete: ");
+ 			System.out.print("\nEnter id for gambler to delete: ");
  			int gamblerToDelete = getIntValueFromUser();	
  		
  			theGamblerData.delete(gamblerToDelete);
  		}
- 		
 	private void displayAllCasinos() {
 		System.out.println("\n ***** Option not yet implemented *****\n");	
 	};
@@ -471,20 +490,193 @@ public class SampleJDBCApplication {
 	private void deleteACasino() {
 		System.out.println("\n ***** Option not yet implemented *****\n");	
 	}
-  
-	private void setupDataSource() {  
-	    /**************************************************************************************************************
-	     * Instantiate and initialize data source for JDBC data base access
-	     *************************************************************************************************************/
-	
-			vegasDataSource = new BasicDataSource();         // simple JDC data source
-			
-		 // Set values in the data source for the database manager and database we want to access	
-			//                    access:dbmgr:server-name:port/databasename
-			vegasDataSource.setUrl("jdbc:mysql://localhost:3306/vegasdb");// connection string
-			vegasDataSource.setUsername("student");                       // owner of the database
-			vegasDataSource.setPassword("Java#1Rules");                   // password for owner
-	    }
-    
-    
+    private void displayAllHosts() {
+		List<Host> allHostEntries = theHostData.getAllHost();
+
+		for(Host aHostEntry : allHostEntries )
+			System.out.println(aHostEntry);
+	}
+	private void displayHostByGambler(){
+		// This is defined outside any block so it is accessible by all code in teh method
+		int gamblerId = 0;
+
+		System.out.print("Enter the id of the Ganbler you want to show Host entries for: ");
+
+		// Get valid int for gambler id loop control variable
+		boolean validIntValueReceived = false;
+
+		do {
+			try {
+				gamblerId = theKeyboard.nextInt();
+				validIntValueReceived = true;
+			} catch (InputMismatchException exceptionObject) {
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
+				System.out.println(" Whole number expected");
+				System.out.println(" Please try again");
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
+				validIntValueReceived = false;
+			} finally {
+				theKeyboard.nextLine(); // clear the enter left in the keyboard buffer by .getInt()
+			}
+		} // end of do
+		while(!validIntValueReceived);  // Loop until valid int is entered by the user
+
+		List<Host> hostedData = theHostData.getHostByGamblerId(gamblerId);
+
+		if(hostedData.size() == 0) {
+			System.out.println("??? Gambler Id: " + gamblerId + " has no entries in the Host table. ???");
+		}
+
+		for(Host aHostEntry : hostedData) {
+			System.out.println(aHostEntry);
+		}
+	}
+	private void displayHostByCasino() {
+
+		String requestedCasino = "";
+
+		System.out.print("Please enter the name of the Casino you would Host entries displayed for: ");
+
+		requestedCasino = theKeyboard.nextLine();
+
+		List<Host> casinoRowsInHost = theHostData.getHostByCasinoName(requestedCasino);
+
+		if(casinoRowsInHost.size() == 0) {
+			System.out.println("??? Host entries for Casino name: " + requestedCasino + " was not found in the database. ???");
+		}
+
+		for(Host aHostEntry : casinoRowsInHost) {
+			System.out.println(aHostEntry);
+		}
+	}
+	private void addAHost() {
+
+		Host newHost = new Host();
+
+		System.out.print("Enter Casino Name: ");
+		newHost.setCasinoName(theKeyboard.nextLine());
+
+		System.out.print("Enter Gambler Id: ");
+		newHost.setGamblerId(getIntValueFromUser());
+
+		System.out.print("Enter Room Type: ");
+		newHost.setRoomType(theKeyboard.nextLine());
+
+		System.out.print("Enter Average Bet: ");
+		newHost.setAvgBet(getIntValueFromUser());
+
+		double creditLine = 0;
+
+		System.out.println("Enter Credit Line:");
+
+		boolean haveValidDouble = false;
+		do {
+			try {
+				creditLine = theKeyboard.nextDouble();
+				haveValidDouble = true;
+			} catch (InputMismatchException exceptionInfo) {
+				System.out.println("!!!!! Uh-Oh! UhOh! Uh-Oh! !!!!!");
+				System.out.println("Expected an integer/whole number");
+				System.out.println("Please try again");
+
+				haveValidDouble = false;
+			} finally {  // Regardless if there is an exception or not...
+				theKeyboard.nextLine(); // Clear the enter left in the keyboard buffer by nextInt()
+			}
+		} // End of do
+		while(!haveValidDouble);
+
+		newHost.setCreditLine(creditLine);
+
+		boolean wasAdded = theHostData.addHost(newHost);
+
+		if (wasAdded) {
+			System.out.println("Entry add successfully o data base: ");
+		}
+		else{
+			System.out.println("!!!!! Row was not added to data base !!!!!\n");
+		}
+	}
+	private void updateAHost() {
+
+		System.out.print("Enter Casino Name for host entry to be updated: ");
+		String casinoName4Update = theKeyboard.nextLine();
+
+		System.out.print("Enter Gambler Id for host entry to be updated: ");
+		int gamblerId4Update = getIntValueFromUser();
+
+		Host updatedHost = theHostData.getAHostEntry(casinoName4Update, gamblerId4Update);
+
+		if (updatedHost == null) {
+			System.out.println("Unable to finf entry in database for host casino \"" + casinoName4Update + "\""
+					+ " and gambled id \"" + gamblerId4Update + "\"");
+			return;
+		}
+
+		System.out.print("Enter Room Type: ");
+		updatedHost.setRoomType(theKeyboard.nextLine());
+
+		System.out.print("Credit Line: ");
+		double creditLine = 0;
+		boolean haveValidDouble = false;
+
+		do {
+			try {
+				creditLine = theKeyboard.nextDouble();
+				haveValidDouble = true;
+			} catch (InputMismatchException exceptionInfo) {
+				System.out.println("!!!!! Uh-Oh! UhOh! Uh-Oh! !!!!!");
+				System.out.println("Expected an integer/whole number");
+				System.out.println("Please try again");
+
+				haveValidDouble = false;
+			} finally {  // Regardless if there is an exception or not...
+				theKeyboard.nextLine(); // Clear the enter left in the keyboard buffer by nextInt()
+			}
+		} // end of do
+			while (!haveValidDouble) ;
+			updatedHost.setCreditLine(creditLine);
+
+			System.out.print("Enter Average Bet: ");
+			updatedHost.setAvgBet(getIntValueFromUser());
+
+			boolean hostEntryUpdated = theHostData.updateHost(updatedHost);
+
+			if (hostEntryUpdated) {
+				System.out.println("Host entry in Host updated!");
+			} else {
+				System.out.println("Host entry in data base was NOT updated!");
+			}
+	} // End of UpdateHost()
+
+	private void  deleteAHost() {
+
+		System.out.print("Enter Casino Name for host entry to be updated: ");
+		String casinoName2Delete = theKeyboard.nextLine();
+
+		System.out.print("Enter Gambler Id for host entry to be updated: ");
+		int gamblerId2Delete = getIntValueFromUser();
+
+		if (theHostData.deleteAHostEntry(casinoName2Delete, gamblerId2Delete)) {
+			System.out.println("Entry in host was successfully deleted");
+
+		} else {
+			System.out.println("Host entry NOT deleted");
+		}
+	}
+
+	private void setupDataSource() {
+	/**************************************************************************************************************
+	 * Instantiate and initialize data source for JDBC data base access
+	 *************************************************************************************************************/
+
+	vegasDataSource = new BasicDataSource();         // simple JDC data source
+
+	// Set values in the data source for the database manager and database we want to access
+	//                    access:dbmgr:server-name:port/databasename
+	vegasDataSource.setUrl("jdbc:mysql://localhost:3306/vegasdb");// connection string
+	vegasDataSource.setUsername("student");                       // owner of the database
+	vegasDataSource.setPassword("Java#1Rules");                   // password for owner
+}
+
 } //End of application class
