@@ -31,6 +31,11 @@ public class GamblerServlet extends HttpServlet {
 	private GamblerDao gamblerTable;
 		
 	DataBaseErrorLog databaseLog;
+	
+	// Reference to writer in response to be used to add html top be returned
+	// Need to be assigned by each method (doGet(), doPost(), etc) for response it receives
+	// It is defines as an instance variable so any helper methods used have access
+	PrintWriter htmlWriter; 
 
 	/**
 	 * @throws IOException
@@ -51,10 +56,10 @@ public class GamblerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-// Instantiate a PrintWriter to write HTML into the response
+// Assign htmlWriter reference to writer provided by response
 // Note: We get the PrintWriter from the response
 //       because the response knows how it wants the HTML written to it		
-		PrintWriter htmlWriter = response.getWriter();
+		htmlWriter = response.getWriter();
 		
 // Retrieve any query parameters from the URL path
 		// these are names in the <input tag of the for in the JSP
@@ -82,6 +87,19 @@ public class GamblerServlet extends HttpServlet {
 		&& id2Update == null) {                         // get all gamblers from data source
 		   theGamblers = gamblerTable.getAllGamblers(); // using the DAO method to do so
 		}
+		
+		if(id2Delete != null) {
+			try {
+				gamblerTable.delete(Long.parseLong(id2Delete));
+			} catch (NumberFormatException | DataBaseDeleteException exceptionObject) {
+				databaseLog.writeToDatabaseErrorLog("Error attempting to delete gambler id: " + id2Delete);
+				databaseLog.writeExceptionInfoToDatabaseErrorLog(exceptionObject);
+				
+			}
+			
+			response.sendRedirect("./HomePage.jsp");
+		}
+		
 		
 		// if the id of the Gambler to be displayed was passed as a query parameter (it's not null)
 		if(idRequested != null) {    // Use the DAO method to get the Gambler with that id
@@ -126,6 +144,7 @@ public class GamblerServlet extends HttpServlet {
 			htmlWriter.println("</div>");
 			} // end of try block
 			catch(NullPointerException exceptionBlock) { // If there is a NullPointerException - display an error page
+				htmlWriter.println("<link rel=\"stylesheet\" href=\"./resources/style.css\"></link>"); // Use this stylesheet file
 				htmlWriter.println("<h1 style=\"color : red;\">Gambler Id: " + idRequested + " not found!</h1>");
 			} // End of catch
 			
@@ -145,9 +164,122 @@ public class GamblerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		// Reference to writer in response to be used to add html top be returned
+		// Need to be assigned by each method (doGet(), doPost(), etc) for response it receives
+		// It is defines as an instance variable so any helper methods used have access	
+		htmlWriter = response.getWriter();
+		
+		// Retrieve any query parameters from the URL path
+		
+		String id2Update  = request.getParameter("id2Update");
+		String action	  = request.getParameter("action");		
+		
+		// Define PrintWriter to write HTML to response object
+		htmlWriter = response.getWriter();
+		
+		// Debugging code
+		//System.out.println("Updating Gambler Id: " + id2Update);
+		//System.out.println("Action requested: "    + action);
+		
+		// Go get the Gambler to be updated from the data source
+		Gambler aGambler = gamblerTable.findGamblerById(Long.parseLong(id2Update));
+		
+		// If we don't find the Gambler in the data source
+		// Put out a message with a link to home page
+		if(aGambler == null) {
+			             
+			htmlWriter.println("<h1 style=\"color:red;\">Gambler id: " + id2Update + " not found!</h1>");
+			
+			htmlWriter.println("<div>");
+			htmlWriter.println("<a href=\"./HomePage.jsp\">Return to Home Page</a>");
+			htmlWriter.println("</div>");
 	
+		}
+		// "action" may contain multiple values 
+		// So process based on the values
+		switch (action) {
+			case "update" :{ // comes from the home page jsp
+				displayGamblerAndGetNewData(aGambler);
+				break;
+			}
+			case "ready2Update": { // comes from the displayGamblerAndGetNewData() form submit 
+	
+				try {
+				performUpdate(request, Long.parseLong(id2Update)); 
+				}
+				catch (DataBaseDeleteException | DataBaseUpdateException exceptionObject) {
+					databaseLog.writeExceptionInfoToDatabaseErrorLog(exceptionObject);
+				}
+				response.sendRedirect("./HomePage.jsp");
+				break;
+			}
+		} // End of switch
 	} // End of doPost()
+	private void displayGamblerAndGetNewData(Gambler aGambler) {
+		
+	htmlWriter.println("<title>Gambler Info</title>");
+	htmlWriter.println("<link rel=\"stylesheet\" href=\"./resources/style.css\"></link>");
 	
+	//                  <form action=\"./gambler?action=ready2update\"                        method=\"post\">
+	htmlWriter.println("<form action=\"./gambler?action=ready2Update&id2Update=" + aGambler.getId() + "\" method=\"post\">");
+	htmlWriter.println("<h2>Gambler Information for Gambler Id: " + aGambler.getId() + "</h2>");	
+	htmlWriter.println("<h4>Please enter new data only for the fields you'd like to change. Thank you!<h4>");
+	htmlWriter.println("<div class=aGambler>");
+
+	htmlWriter.println("<p>Name: " + aGambler.getName()                    + "<input type=\"text\" size=25 name=\"newName\">      </p>");
+	htmlWriter.println("<p>Address: " + aGambler.getAddress()              + "<input type=\"text\" size=25 name=\"newAddr\">      </p>");
+	htmlWriter.println("<p>Birth Date: " + aGambler.getBirthDate()         + "<input type=\"text\" size=10 name=\"newBirthDate\"> </p>");
+	htmlWriter.println("<p>Monthly Salary: " + aGambler.getMonthlySalary() + "<input type=\"text\" size=9  name=\"newSalary\">    </p>");
+	htmlWriter.println("</div>");
+		
+	htmlWriter.println("<input type=\"submit\" value=\"Submit Changes\">");
+	htmlWriter.println("</form>");
+	
+	htmlWriter.println("<div>");
+	htmlWriter.println("<a href=\"./HomePage.jsp\">Return to Home Page</a>");
+	htmlWriter.println("</div>");
+	} // End of displayGambler and getNewData()
+	
+	private void performUpdate(HttpServletRequest request, long id2Update) throws DataBaseUpdateException, DataBaseDeleteException {
+		
+		Gambler gambler2Update = gamblerTable.findGamblerById(id2Update);
+		
+		DateTimeFormatter EurDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				
+		String newName = request.getParameter("newName");
+		String newAddr = request.getParameter("newAddr");
+		String newBday = request.getParameter("newBirthDate");
+		String newSal  = request.getParameter("newSalary");
+		
+		/* These are present for debugging purposes to verify parameters received
+		System.out.println("newName: " + newName);
+		System.out.println("newAddr: " +newAddr);
+		System.out.println("newBDay: " +newBday);
+		System.out.println("newSal : " +newSal);
+		*/
+		
+		if(!newName.equals("")) {
+			gambler2Update.setName(newName);
+		}
+		
+		if(!newAddr.equals("")) {
+			gambler2Update.setAddress(newAddr);
+		}
+		
+		if(!newSal.equals("")) {
+			gambler2Update.setMonthlySalary(Double.parseDouble(newSal));
+		}
+		
+		if(!newBday.equals("")) {
+			gambler2Update.setBirthDate(LocalDate.parse(newBday, EurDateFormat));
+		}
+		
+		gamblerTable.update(gambler2Update);
+		
+	}
+	// End of performUpdate()
+
 	
 } // End of Servlet class
 		
