@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -37,16 +38,29 @@ import javax.sql.DataSource;
 public class MemoryGamblerDao implements GamblerDao {
 	
 	// define a reference to the DataSource object
-	private List<Gambler> theDataBase;
 	
-	private DataBaseErrorLog theDatabaseErrorLog;
+	/******************************************************************************
+	 * static so we only get one database, highestGablerId and DataBaseErrorLog
+	 *    regardless of the number of processes using the DAO in the application
+     ******************************************************************************/     
+	private static List<Gambler> theDataBase = null;
+	
+	private static int highestGamblerId = -1;
+	
+	private static DataBaseErrorLog theDatabaseErrorLog = null;
 
+	/******************************************************************************
+	 * Constructor
+     ******************************************************************************/
 	public MemoryGamblerDao() throws IOException {
-		this.theDataBase = new ArrayList();
-		setupTheDataBase();
-		this.theDatabaseErrorLog = new DataBaseErrorLog("database");
+		if(theDataBase == null) {               // If data source is not defined...
+			this.theDataBase = new ArrayList(); //    define it
+			setupTheDataBase();                 //    and set it up
+		}
+		if(theDatabaseErrorLog == null) { // If the Data base Error log not defined
+			this.theDatabaseErrorLog = new DataBaseErrorLog("database-"); // define it
+		}
 	}
-
 
 	@Override  // Ask Java to be sure we are correctly providing the methods define in the interface
 	public List<Gambler> getAllGamblers() {
@@ -72,6 +86,9 @@ public class MemoryGamblerDao implements GamblerDao {
 		Gambler aNewGambler = new Gambler(gamblerToAdd);
 		
 		boolean didAddToDataBaseWork = false;
+		
+		highestGamblerId++;                   // Calculate new Gambler's Id
+		aNewGambler.setId(highestGamblerId);  // Assign new Gambler Id to Gambler
 		
 		try {
 		// Add new Gambler to the data base
@@ -181,7 +198,13 @@ public class MemoryGamblerDao implements GamblerDao {
 		theDataBase.add(new Gambler(191, "Frank Mint"     , "El Paso, TX"    , LocalDate.parse("1993-04-28", EurDateFormat) , 9200.00  ));
 		theDataBase.add(new Gambler(572, "Al Mostbroke"   , "Clayton, MO"    , LocalDate.parse("1987-01-18", EurDateFormat) , 28950.00 ));
 		theDataBase.add(new Gambler(74 , "Red Squiggledoc", "Java, Indonesia", LocalDate.parse("1996-01-23", EurDateFormat) , 100000.00));
-	}
+	
+		for(Gambler aGambler : theDataBase) {
+			if(highestGamblerId < aGambler.getId()) {
+				highestGamblerId = aGambler.getId();
+			}
+		}
+		}
 
 	
 } // End of class

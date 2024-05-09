@@ -37,6 +37,9 @@
 	<form action="./gambler?action=update" method="post">
 		Update Gambler with id: <input type="text" size=5 name="id2Update">
 	</form>
+</div> 
+<div>
+	<a class="options" href="./AddGambler.jsp">Add a New Gambler</a> 
 </div>
 </body>
 </html>
