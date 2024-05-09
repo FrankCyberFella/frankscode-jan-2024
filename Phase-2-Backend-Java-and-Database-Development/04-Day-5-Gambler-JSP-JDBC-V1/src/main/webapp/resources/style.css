@@ -1,0 +1,19 @@
+html {
+    background-image: linear-gradient(lightyellow, khaki);
+    height: 100%;   /* Fill the browser screen */
+    color: blue;  /* make text blue          */
+	background-size: cover;
+    background-attachment: fixed;
+}
+.options {
+	margin-left: 200px;
+}
+.aGambler {
+	color: black;
+    margin-left: 20px;
+    background-color: white;
+    width: 600px;
+}
+#endapp {
+  margin-left: 10px;
+}
