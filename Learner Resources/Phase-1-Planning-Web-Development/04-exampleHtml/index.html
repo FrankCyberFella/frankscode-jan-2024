@@ -1,0 +1,94 @@
+<!-- less-than exclamation point indicates directions/information for browser -->
+<!-- this is an HTML comment                                                  -->
+
+<!DOCTYPE html> <!-- Tells the browser this document contains HTML not required, but encouraged -->
+
+<html lang="en"> <!-- English in the document - assists search engines  -->
+
+<head> <!-- Information for the browser - not displayed as part of document -->
+    <!-- Use the UTF-8 character set for document -->
+    <meta charset="UTF-8"> 
+
+    <!-- viewable part of document is the width of the device screen -->
+    <meta name="viewport" content="width=, initial-scale=1.0"> 
+
+    <!-- Words to appear on browser tab for the page -->
+    <title>Example Html</title>
+
+    <!-- Embedded CSS (styling) in document   -->
+    <!-- Note: It is part of the head element -->
+    <style>
+        /* this is a comment CSS (styling) */
+        table { /* Apply these styles to all table elements */
+            font-family: arial, sans-serif;
+            width: 100%;
+            border-collapse: collapse;
+        }
+      
+        td, th { /* Apply these styles to all td and th elements */
+            border: 1px solid blue;
+            text-align: left;
+            padding: 4px;
+         }
+      
+         tr:nth-child(even) { /* Apply these styles to every other tr elements */
+             background-color: linen;
+         }
+      </style> <!-- End of embedded CSS (styling) for the document -->
+</head>
+<body>
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./state_seals.html">State Seals</a>
+        <a href="./state_videos.html">State Video</a>
+    </nav>
+    <h1>Sample Page for HTML Training</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>State<br>Code</th>
+                <th>State<br>Name</th>
+                <th>State<br>Motto</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>AK</td>
+            <td>Arkansas</td>
+            <td>The people rule</td>
+        </tr>
+        <tr>
+            <td>CA</td>
+            <td>California</td>
+            <td>Eureka</td>
+        </tr>
+        <tr>
+            <td>CT</td>
+            <td>Connecticut</td>
+            <td>He who has transplanted still sustains</td>
+        </tr>
+        <tr>
+            <td>ME</td>
+            <td>Maine</td>
+            <td>I Lead</td>
+        </tr>
+        <tr>
+            <td>MA</td>
+            <td>Massachusetts</td>
+            <td>By the sword we seek peace, but peace inly under liberty</td>
+        </tr>
+        <tr>
+            <td>NH</td>
+            <td>New Hampshire</td>
+            <td>Live free or die</td>
+        </tr>
+        <tr>
+            <td>TX</td>
+            <td>Texas</td>
+            <td>Friendship</td>
+        </tr>
+        
+    </table>
+
+
+</body>
+</html>
