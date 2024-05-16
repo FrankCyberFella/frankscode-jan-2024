@@ -1,0 +1,47 @@
+  "gamblerId"     : "054", 
+  "name"          : "Neil Bransfield",
+  "address"       : "Seattle, WA",
+  "birthDate"     :  "1959-03-11",
+  "monthlySalary" : 5000.00
+
+  "gamblerId"     : 137, 
+  "name"          : "Phil Donahuge",
+  "address"       : null,
+  "birthDate"     :  "1946-12-29",
+  "monthlySalary" : 3250.25
+  
+  "gamblerId"     : "382", 
+  "name"          : "Stickman Nelson",
+  "address"       : "Cumberland, MD",
+  "birthDate"     :  "1946-12-29",
+  "monthlySalary" : 12983.75
+
+  "gamblerId"     : 292, 
+  "name"          : "Bettina Chavez",
+  "address"       : "Fresno, CA",
+  "birthDate"     :  "1964-09-09",
+  "monthlySalary" : 2950.00
+
+  "gamblerId"     : 012, 
+  "name"          : "T Judson Smith",
+  "address"       : "FLos Angeles, CA",
+  "birthDate"     :  "1972-05-01",
+  "monthlySalary" : 1398.65
+
+  "gamblerId"     : 572, 
+  "name"          : "Al Mostbroke",
+  "address"       : "Clayton, MO",
+  "birthDate"     :  "1975-01-18",
+  "monthlySalary" : 4505.65
+
+  "gamblerId"     : 201, 
+  "name"          : "S. Q. Elle",
+  "address"       : "Relational, MO",
+  "birthDate"     :  "1995-05-23",
+  "monthlySalary" : 1000000.01
+
+  "gamblerId"     : 007, 
+  "name"          : "Red Squiggledoc",
+  "address"       : "Java, Indonesia",
+  "birthDate"     :  "1996-01-23",
+  "monthlySalary" : 2000000
